@@ -26,3 +26,4 @@ _testmain.go
 # Project specific
 config.json
 wallabag-stats
+chart.png
