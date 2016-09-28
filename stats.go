@@ -15,6 +15,7 @@ import (
 
 const DATA_JSON = "data.json"
 const CONFIG_JSON = "config.json"
+const LOCK_FILE = ".lock"
 
 type WallabagStats struct {
 	Times   []time.Time
@@ -51,8 +52,21 @@ func writeNewJson(newWbgStats WallabagStats) {
 }
 
 func main() {
-	start := time.Now()
+	// start := time.Now()
 	log.SetOutput(os.Stdout)
+
+	// check if lock file exists and exit, so we do not run this process two times
+	if _, err := os.Stat(LOCK_FILE); os.IsExist(err) {
+		log.Fatalf("lock file exists %s", LOCK_FILE)
+		os.Exit(1)
+	}
+
+	// create lock file and delete it on exit of main
+	err := ioutil.WriteFile(LOCK_FILE, nil, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer os.Remove(LOCK_FILE)
 
 	var wbgStats WallabagStats
 	readCurrentJson(&wbgStats)
@@ -70,24 +84,22 @@ func main() {
 	archived := float64(wallabago.GetNumberOfArchivedArticles())
 	starred := float64(wallabago.GetNumberOfStarredArticles())
 	unread := float64(total - archived)
-	log.Printf("total: %v\n", total)
+	/*log.Printf("total: %v\n", total)
 	log.Printf("archived: %v\n", archived)
 	log.Printf("unread: %v\n", unread)
 	log.Printf("starred: %v\n", starred)
 	log.Printf("time: %v\n", time.Now())
-
-	log.Printf("wbgStats: %v\n", wbgStats)
+	log.Printf("wbgStats: %v\n", wbgStats)*/
 
 	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
-		log.Print("all values the same, skipping data set")
 	} else {
-		log.Print("appending new values")
+		// log.Print("appending new values")
 		wbgStats.Times = append(wbgStats.Times, time.Now())
 		wbgStats.Total = append(wbgStats.Total, total)
 		wbgStats.Unread = append(wbgStats.Unread, unread)
 		wbgStats.Starred = append(wbgStats.Starred, starred)
 
-		log.Printf("wbgStats: %v\n", wbgStats)
+		// log.Printf("wbgStats: %v\n", wbgStats)
 		writeNewJson(wbgStats)
 
 	}
@@ -147,5 +159,5 @@ func main() {
 		panic(err)
 	}
 
-	log.Printf("time elapsed: %.2fs\n", time.Since(start).Seconds())
+	// log.Printf("time elapsed: %.2fs\n", time.Since(start).Seconds())
 }
