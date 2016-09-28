@@ -116,12 +116,24 @@ func main() {
 			Name:      "Unread",
 			NameStyle: chart.StyleShow(),
 			Style:     chart.Style{Show: true},
+			ValueFormatter: func(v interface{}) string {
+				if vf, isFloat := v.(float64); isFloat {
+					return fmt.Sprintf("%0.0f", vf)
+				}
+				return ""
+			},
 		},
 		YAxisSecondary: chart.YAxis{
 			Name:      "Total",
 			NameStyle: chart.StyleShow(),
 			Style: chart.Style{
-				Show: false, //enables / displays the secondary y-axis
+				Show: true, //enables / displays the secondary y-axis
+			},
+			ValueFormatter: func(v interface{}) string {
+				if vf, isFloat := v.(float64); isFloat {
+					return fmt.Sprintf("%0.0f", vf)
+				}
+				return ""
 			},
 		},
 		Background: chart.Style{
