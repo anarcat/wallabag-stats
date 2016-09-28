@@ -24,6 +24,7 @@ _testmain.go
 *.prof
 
 # Project specific
-config.json
-wallabag-stats
 chart.png
+config.json
+data.json
+wallabag-stats
