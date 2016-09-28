@@ -13,12 +13,52 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
+const DATA_JSON = "data.json"
+const CONFIG_JSON = "config.json"
+
+type WallabagStats struct {
+	Times   []time.Time
+	Total   []float64
+	Unread  []float64
+	Starred []float64
+}
+
+func readCurrentJson(curJson *WallabagStats) {
+	if _, err := os.Stat(DATA_JSON); os.IsNotExist(err) {
+		// in case file does not exist, we cannot prefill the WallabagStats
+		log.Printf("file does not exist %s", DATA_JSON)
+		return
+	}
+	b, err := ioutil.ReadFile(DATA_JSON)
+	if err != nil {
+		panic(err)
+	}
+	err = json.Unmarshal(b, curJson)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func writeNewJson(newWbgStats WallabagStats) {
+	b, err := json.Marshal(newWbgStats)
+	if err != nil {
+		panic(err)
+	}
+	err = ioutil.WriteFile(DATA_JSON, b, 0644)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	start := time.Now()
 	log.SetOutput(os.Stdout)
 
+	var wbgStats WallabagStats
+	readCurrentJson(&wbgStats)
+
 	var config wallabago.WallabagConfig
-	raw, err := ioutil.ReadFile("config.json")
+	raw, err := ioutil.ReadFile(CONFIG_JSON)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
@@ -26,14 +66,31 @@ func main() {
 	json.Unmarshal(raw, &config)
 	wallabago.Config = config
 
-	total := wallabago.GetNumberOfTotalArticles()
-	archived := wallabago.GetNumberOfArchivedArticles()
-	starred := wallabago.GetNumberOfStarredArticles()
+	total := float64(wallabago.GetNumberOfTotalArticles())
+	archived := float64(wallabago.GetNumberOfArchivedArticles())
+	starred := float64(wallabago.GetNumberOfStarredArticles())
+	unread := float64(total - archived)
 	log.Printf("total: %v\n", total)
 	log.Printf("archived: %v\n", archived)
-	log.Printf("unread: %v\n", total-archived)
+	log.Printf("unread: %v\n", unread)
 	log.Printf("starred: %v\n", starred)
 	log.Printf("time: %v\n", time.Now())
+
+	log.Printf("wbgStats: %v\n", wbgStats)
+
+	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
+		log.Print("all values the same, skipping data set")
+	} else {
+		log.Print("appending new values")
+		wbgStats.Times = append(wbgStats.Times, time.Now())
+		wbgStats.Total = append(wbgStats.Total, total)
+		wbgStats.Unread = append(wbgStats.Unread, unread)
+		wbgStats.Starred = append(wbgStats.Starred, starred)
+
+		log.Printf("wbgStats: %v\n", wbgStats)
+		writeNewJson(wbgStats)
+
+	}
 
 	// generate chart
 	graph := chart.Chart{
@@ -63,39 +120,15 @@ func main() {
 		},
 		Series: []chart.Series{
 			chart.TimeSeries{
-				Name: "Unread",
-				XValues: []time.Time{
-					time.Now().AddDate(0, 0, -10),
-					time.Now().AddDate(0, 0, -9),
-					time.Now().AddDate(0, 0, -8),
-					time.Now().AddDate(0, 0, -7),
-					time.Now().AddDate(0, 0, -6),
-					time.Now().AddDate(0, 0, -5),
-					time.Now().AddDate(0, 0, -4),
-					time.Now().AddDate(0, 0, -3),
-					time.Now().AddDate(0, 0, -2),
-					time.Now().AddDate(0, 0, -1),
-					time.Now(),
-				},
-				YValues: []float64{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0},
+				Name:    "Unread",
+				XValues: wbgStats.Times,
+				YValues: wbgStats.Unread,
 			},
 			chart.TimeSeries{
-				YAxis: chart.YAxisSecondary,
-				Name:  "Total",
-				XValues: []time.Time{
-					time.Now().AddDate(0, 0, -10),
-					time.Now().AddDate(0, 0, -9),
-					time.Now().AddDate(0, 0, -8),
-					time.Now().AddDate(0, 0, -7),
-					time.Now().AddDate(0, 0, -6),
-					time.Now().AddDate(0, 0, -5),
-					time.Now().AddDate(0, 0, -4),
-					time.Now().AddDate(0, 0, -3),
-					time.Now().AddDate(0, 0, -2),
-					time.Now().AddDate(0, 0, -1),
-					time.Now(),
-				},
-				YValues: []float64{3.0, 4.0, 5.0, 7.0, 8.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0},
+				YAxis:   chart.YAxisSecondary,
+				Name:    "Total",
+				XValues: wbgStats.Times,
+				YValues: wbgStats.Total,
 			},
 		},
 	}
@@ -106,7 +139,13 @@ func main() {
 
 	buffer := bytes.NewBuffer([]byte{})
 	err = graph.Render(chart.PNG, buffer)
+	if err != nil {
+		panic(err)
+	}
 	err = ioutil.WriteFile("chart.png", buffer.Bytes(), 0644)
+	if err != nil {
+		panic(err)
+	}
 
 	log.Printf("time elapsed: %.2fs\n", time.Since(start).Seconds())
 }
