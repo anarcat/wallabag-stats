@@ -13,4 +13,4 @@ Chart is only created when there at least two data sets, in which unread and tot
 
 ## Go Report Card
 
-https://goreportcard.com/
+[![Go Report Card Badge](https://goreportcard.com/badge/github.com/Strubbl/wallabag-stats)](https://goreportcard.com/report/github.com/Strubbl/wallabag-stats)
