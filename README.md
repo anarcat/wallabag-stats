@@ -11,6 +11,12 @@ Chart is only created when there at least two data sets, in which unread and tot
 - http://bl.ocks.org/mbostock/3943967 from https://github.com/d3/d3/wiki/Gallery
 
 
-## Go Report Card
+## Project Status
+### Go Report Card
 
 [![Go Report Card Badge](https://goreportcard.com/badge/github.com/Strubbl/wallabag-stats)](https://goreportcard.com/report/github.com/Strubbl/wallabag-stats)
+
+
+### Travis CI
+
+[![Build Status](https://travis-ci.org/Strubbl/wallabag-stats.svg?branch=master)](https://travis-ci.org/Strubbl/wallabag-stats)
