@@ -13,10 +13,11 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-const DATA_JSON = "data.json"
-const CONFIG_JSON = "config.json"
-const LOCK_FILE = ".lock"
+const dataJSON = "data.json"
+const configJSON = "config.json"
+const lockFile = ".lock"
 
+// WallabagStats is a data set representing the number of total, unread and starred articles in wallabg at a given time
 type WallabagStats struct {
 	Times   []time.Time
 	Total   []float64
@@ -24,28 +25,28 @@ type WallabagStats struct {
 	Starred []float64
 }
 
-func readCurrentJson(curJson *WallabagStats) {
-	if _, err := os.Stat(DATA_JSON); os.IsNotExist(err) {
+func readCurrentJSON(curJSON *WallabagStats) {
+	if _, err := os.Stat(dataJSON); os.IsNotExist(err) {
 		// in case file does not exist, we cannot prefill the WallabagStats
-		log.Printf("file does not exist %s", DATA_JSON)
+		log.Printf("file does not exist %s", dataJSON)
 		return
 	}
-	b, err := ioutil.ReadFile(DATA_JSON)
+	b, err := ioutil.ReadFile(dataJSON)
 	if err != nil {
 		panic(err)
 	}
-	err = json.Unmarshal(b, curJson)
+	err = json.Unmarshal(b, curJSON)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func writeNewJson(newWbgStats WallabagStats) {
+func writeNewJSON(newWbgStats WallabagStats) {
 	b, err := json.Marshal(newWbgStats)
 	if err != nil {
 		panic(err)
 	}
-	err = ioutil.WriteFile(DATA_JSON, b, 0644)
+	err = ioutil.WriteFile(dataJSON, b, 0644)
 	if err != nil {
 		panic(err)
 	}
@@ -56,23 +57,23 @@ func main() {
 	log.SetOutput(os.Stdout)
 
 	// check if lock file exists and exit, so we do not run this process two times
-	if _, err := os.Stat(LOCK_FILE); os.IsExist(err) {
-		log.Fatalf("lock file exists %s", LOCK_FILE)
+	if _, err := os.Stat(lockFile); os.IsExist(err) {
+		log.Fatalf("lock file exists %s", lockFile)
 		os.Exit(1)
 	}
 
 	// create lock file and delete it on exit of main
-	err := ioutil.WriteFile(LOCK_FILE, nil, 0644)
+	err := ioutil.WriteFile(lockFile, nil, 0644)
 	if err != nil {
 		panic(err)
 	}
-	defer os.Remove(LOCK_FILE)
+	defer os.Remove(lockFile)
 
 	var wbgStats WallabagStats
-	readCurrentJson(&wbgStats)
+	readCurrentJSON(&wbgStats)
 
 	var config wallabago.WallabagConfig
-	raw, err := ioutil.ReadFile(CONFIG_JSON)
+	raw, err := ioutil.ReadFile(configJSON)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
@@ -100,7 +101,7 @@ func main() {
 		wbgStats.Starred = append(wbgStats.Starred, starred)
 
 		// log.Printf("wbgStats: %v\n", wbgStats)
-		writeNewJson(wbgStats)
+		writeNewJSON(wbgStats)
 
 		// generate chart
 		graph := chart.Chart{
