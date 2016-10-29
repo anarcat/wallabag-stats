@@ -24,6 +24,22 @@ You can install a cronjob to fetch the stats data from your wallabag and let the
 
 TODO :)
 
+## wallabag-stats -h
+
+```
+Usage of wallabag-stats:
+  -chart string
+    	file name to put the chart PNG (default "chart.png")
+  -config string
+    	file name of config JSON file (default "config.json")
+  -d	get debug output (implies verbose mode)
+  -data string
+    	file name of data JSON file (default "data.json")
+  -v	print version
+  -verbose
+    	verbose mode
+```
+
 ## Links to chart libs
 
 - https://github.com/wcharczuk/go-chart
