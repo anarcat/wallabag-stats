@@ -13,7 +13,7 @@ git checkout "$latesttag"
 bin=$(basename $(pwd))
 arch=$(file -b $bin | awk -F , '{ print $2  }' | xargs)
 version=$(grep version version.go | awk -F \" '{ print $2  }')
-releasefolder="$bin"
+releasefolder="wbgstats"
 
 if [ -n "$bin" ]; then
   make clean build
