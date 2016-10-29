@@ -43,6 +43,6 @@ bump:
 
 release:
 	@echo "+ $@"
-	@./release.sh > /dev/random
+	@./release.sh > /dev/random 2>&1
 	@ls -lh *.7z
 
