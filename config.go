@@ -4,12 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 
 	"github.com/Strubbl/wallabago"
 )
 
 func getConfig() wallabago.WallabagConfig {
+	if *debug {
+		log.Println("getConfig()")
+	}
 	var config wallabago.WallabagConfig
 	raw, err := ioutil.ReadFile(*configJSON)
 	if err != nil {

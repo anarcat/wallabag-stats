@@ -47,24 +47,30 @@ func main() {
 	archived := float64(wallabago.GetNumberOfArchivedArticles())
 	starred := float64(wallabago.GetNumberOfStarredArticles())
 	unread := float64(total - archived)
-	/*log.Printf("total: %v\n", total)
-	log.Printf("archived: %v\n", archived)
-	log.Printf("unread: %v\n", unread)
-	log.Printf("starred: %v\n", starred)
-	log.Printf("time: %v\n", time.Now())
-	log.Printf("wbgStats: %v\n", wbgStats)*/
+	if *debug {
+		log.Printf("total: %v\n", total)
+		log.Printf("archived: %v\n", archived)
+		log.Printf("unread: %v\n", unread)
+		log.Printf("starred: %v\n", starred)
+		log.Printf("time: %v\n", time.Now())
+		log.Printf("wbgStats: %v\n", wbgStats)
+	}
 
 	// comparing last data set with currently fetched data set
 	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
 		// no data change since last call --> nothing to do
 	} else {
-		// log.Print("appending new values")
+		if *debug {
+			log.Print("appending new values")
+		}
 		wbgStats.Times = append(wbgStats.Times, time.Now())
 		wbgStats.Total = append(wbgStats.Total, total)
 		wbgStats.Unread = append(wbgStats.Unread, unread)
 		wbgStats.Starred = append(wbgStats.Starred, starred)
 
-		// log.Printf("wbgStats: %v\n", wbgStats)
+		if *debug {
+			log.Printf("wbgStats: %v\n", wbgStats)
+		}
 		writeNewJSON(wbgStats)
 		generateChartPNG(wbgStats)
 	}
