@@ -37,6 +37,12 @@ install:
 	@go install .
 
 bump:
+	@echo "+ $@"
 	bash bump.sh
 	git diff
+
+release: build
+	@echo "+ $@"
+	@./release.sh > /dev/random
+	@ls -lh *.7z
 
