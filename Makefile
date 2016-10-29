@@ -38,11 +38,11 @@ install:
 
 bump:
 	@echo "+ $@"
-	bash bump.sh
-	git diff
+	@./scripts/bump.sh
+	@git diff
 
 release:
 	@echo "+ $@"
-	@./release.sh > /dev/random 2>&1
+	@./scripts/release.sh > /dev/random 2>&1
 	@ls -lh *.7z
 
