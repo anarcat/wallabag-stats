@@ -41,7 +41,7 @@ bump:
 	bash bump.sh
 	git diff
 
-release: build
+release:
 	@echo "+ $@"
 	@./release.sh > /dev/random
 	@ls -lh *.7z
