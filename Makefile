@@ -36,3 +36,7 @@ install:
 	@echo "+ $@"
 	@go install .
 
+bump:
+	bash bump.sh
+	git diff
+
