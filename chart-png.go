@@ -8,8 +8,6 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-const chartPNG = "chart.png"
-
 func generateChartPNG(wbgStats WallabagStats) {
 	// generate chart
 	graph := chart.Chart{
@@ -73,7 +71,7 @@ func generateChartPNG(wbgStats WallabagStats) {
 	if err != nil {
 		panic(err)
 	}
-	err = ioutil.WriteFile(chartPNG, buffer.Bytes(), 0644)
+	err = ioutil.WriteFile(*chartPNG, buffer.Bytes(), 0644)
 	if err != nil {
 		panic(err)
 	}
