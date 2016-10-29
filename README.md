@@ -1,12 +1,28 @@
 # wallabag-stats
 
-Draws a chart for unread and total articles in your [Wallabag](https://github.com/wallabag/wallabag/) instance.
+Draws a chart for unread and total articles in your [wallabag](https://github.com/wallabag/wallabag/) instance.
 
 Chart is only created when there at least two data sets, in which unread and total are both different compared with their previous value. Otherwise, if the delta is zero, the go-chart lib does not print a chart.
 
 ## Example
 
 ![Example chart](example/example.png)
+
+## Install
+
+Copy `example/config.json` along with your wallabag-stats binary and change it according to your wallabag instance.
+
+### Updates via Cron
+
+You can install a cronjob to fetch the stats data from your wallabag and let the graph being printed on changes. E.g. a user cronjob line by editing your cronjob file via `cronjob -e`:
+
+```
+* * * * * cd /home/$USER/opt/wallabag-stats/ && ./wallabag-stats && cp chart.png /var/www
+```
+
+### Updates via systemd Timer
+
+TODO :)
 
 ## Links to chart libs
 
