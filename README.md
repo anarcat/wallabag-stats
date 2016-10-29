@@ -4,6 +4,9 @@ Draws a chart for unread and total articles in your [Wallabag](https://github.co
 
 Chart is only created when there at least two data sets, in which unread and total are both different compared with their previous value. Otherwise, if the delta is zero, the go-chart lib does not print a chart.
 
+## Example
+
+![Example chart](example/example.png)
 
 ## Links to chart libs
 
