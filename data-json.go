@@ -17,6 +17,9 @@ type WallabagStats struct {
 }
 
 func readCurrentJSON(curJSON *WallabagStats) {
+	if *debug {
+		log.Println("readCurrentJSON")
+	}
 	if _, err := os.Stat(*dataJSON); os.IsNotExist(err) {
 		// in case file does not exist, we cannot prefill the WallabagStats
 		log.Printf("file does not exist %s", *dataJSON)
@@ -33,12 +36,21 @@ func readCurrentJSON(curJSON *WallabagStats) {
 }
 
 func writeNewJSON(newWbgStats WallabagStats) {
+	if *debug {
+		log.Println("writeNewJSON")
+	}
 	b, err := json.Marshal(newWbgStats)
 	if err != nil {
+		if *debug {
+			log.Println("writeNewJSON: error while marshalling data json")
+		}
 		panic(err)
 	}
 	err = ioutil.WriteFile(*dataJSON, b, 0644)
 	if err != nil {
+		if *debug {
+			log.Println("writeNewJSON: error while writing data json")
+		}
 		panic(err)
 	}
 }

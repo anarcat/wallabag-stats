@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 const defaultChartPNG = "chart.png"
@@ -20,17 +21,20 @@ var dataJSON = flag.String("data", defaultDataJSON, "file name of data JSON file
 
 func handleFlags() {
 	flag.Parse()
+	if *debug && len(flag.Args()) > 0 {
+		log.Printf("handleFlags: non-flag args=%v", strings.Join(flag.Args(), " "))
+	}
 	// version first, because it directly exits here
 	if *v {
 		fmt.Printf("version %v\n", version)
 		os.Exit(0)
 	}
 	// test verbose before debug because debug implies verbose
-	if *verbose {
+	if *verbose && !*debug {
 		log.Printf("verbose mode")
 	}
 	if *debug {
-		log.Printf("debug mode")
+		log.Printf("handleFlags: debug mode")
 		// debug implies verbose
 		*verbose = true
 	}

@@ -4,12 +4,15 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
 func generateChartPNG(wbgStats WallabagStats) {
-	// generate chart
+	if *verbose {
+		log.Println("generating chart")
+	}
 	graph := chart.Chart{
 		XAxis: chart.XAxis{
 			Name:           "Time",
@@ -61,18 +64,29 @@ func generateChartPNG(wbgStats WallabagStats) {
 			},
 		},
 	}
-
+	if *debug {
+		log.Println("generateChartPNG: chart created")
+	}
 	graph.Elements = []chart.Renderable{
 		chart.Legend(&graph),
+	}
+	if *debug {
+		log.Println("generateChartPNG: add legend to chart")
 	}
 
 	buffer := bytes.NewBuffer([]byte{})
 	err := graph.Render(chart.PNG, buffer)
 	if err != nil {
+		if *debug {
+			log.Fatal("generateChartPNG: error while rendering graph")
+		}
 		panic(err)
 	}
 	err = ioutil.WriteFile(*chartPNG, buffer.Bytes(), 0644)
 	if err != nil {
+		if *debug {
+			log.Fatal("generateChartPNG: error while writing png")
+		}
 		panic(err)
 	}
 }

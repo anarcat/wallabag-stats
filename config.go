@@ -12,7 +12,7 @@ import (
 
 func getConfig() wallabago.WallabagConfig {
 	if *debug {
-		log.Println("getConfig()")
+		log.Printf("getConfig: file is %s", *configJSON)
 	}
 	var config wallabago.WallabagConfig
 	raw, err := ioutil.ReadFile(*configJSON)
