@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -13,7 +12,6 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-const configJSON = "config.json"
 const lockFile = ".lock"
 
 func main() {
@@ -36,14 +34,7 @@ func main() {
 	var wbgStats WallabagStats
 	readCurrentJSON(&wbgStats)
 
-	var config wallabago.WallabagConfig
-	raw, err := ioutil.ReadFile(configJSON)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	json.Unmarshal(raw, &config)
-	wallabago.Config = config
+	wallabago.Config = getConfig()
 
 	total := float64(wallabago.GetNumberOfTotalArticles())
 	archived := float64(wallabago.GetNumberOfArchivedArticles())
