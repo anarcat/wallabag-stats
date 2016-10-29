@@ -19,7 +19,8 @@ if [ -n "$bin" ]; then
   make clean build
   mkdir $releasefolder
   cp "$bin" "$releasefolder/$bin-$version"
-  strip "$bin-$version"
+  cp "example/config.json" "$releasefolder/"
+  strip "$releasefolder/$bin-$version"
   7z a "$bin-$version-$arch.7z" "$releasefolder"
   rm -r "$releasefolder"
 fi
