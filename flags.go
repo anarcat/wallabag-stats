@@ -20,14 +20,18 @@ var dataJSON = flag.String("-data", defaultDataJSON, "file name of data JSON fil
 
 func handleFlags() {
 	flag.Parse()
+	// version first, because it directly exits here
 	if *v {
 		fmt.Printf("version %v\n", version)
 		os.Exit(0)
 	}
-	if *debug {
-		log.Printf("debug mode")
-	}
+	// test verbose before debug because debug implies verbose
 	if *verbose {
 		log.Printf("verbose mode")
+	}
+	if *debug {
+		log.Printf("debug mode")
+		// debug implies verbose
+		*verbose = true
 	}
 }
