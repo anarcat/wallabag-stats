@@ -12,6 +12,7 @@ const defaultChartPNG = "chart.png"
 const defaultConfigJSON = "config.json"
 const defaultDataJSON = "data.json"
 
+var dataOnly = flag.Bool("data-only", false, "collect data only, do not generate any charts")
 var debug = flag.Bool("d", false, "get debug output (implies verbose mode)")
 var v = flag.Bool("v", false, "print version")
 var verbose = flag.Bool("verbose", false, "verbose mode")

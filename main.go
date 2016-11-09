@@ -43,15 +43,15 @@ func main() {
 	defer os.Remove(lockFile)
 
 	if *verbose {
+		log.Println("reading config")
+	}
+	wallabago.Config = getConfig()
+
+	if *verbose {
 		log.Println("reading data json file into memory")
 	}
 	var wbgStats WallabagStats
 	readCurrentJSON(&wbgStats)
-
-	if *verbose {
-		log.Println("reading config")
-	}
-	wallabago.Config = getConfig()
 
 	if *verbose {
 		log.Println("get current stats data set from Wallabag")
@@ -95,7 +95,13 @@ func main() {
 		if *verbose {
 			log.Print("generating chart PNG")
 		}
-		generateChartPNG(wbgStats)
+		if !*dataOnly {
+			generateChartPNG(wbgStats)
+		} else {
+			if *verbose {
+				log.Print("not generating charts due to data-only flag")
+			}
+		}
 	}
 	if *verbose {
 		log.Print("main program finish")

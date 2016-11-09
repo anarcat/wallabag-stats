@@ -22,7 +22,9 @@ func readCurrentJSON(curJSON *WallabagStats) {
 	}
 	if _, err := os.Stat(*dataJSON); os.IsNotExist(err) {
 		// in case file does not exist, we cannot prefill the WallabagStats
-		log.Printf("file does not exist %s", *dataJSON)
+		if *verbose { // not fatal, just start with a new one
+			log.Printf("file does not exist %s", *dataJSON)
+		}
 		return
 	}
 	b, err := ioutil.ReadFile(*dataJSON)
