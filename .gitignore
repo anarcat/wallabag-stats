@@ -27,5 +27,6 @@ _testmain.go
 chart.png
 config.json
 data.json
+.lock
 wallabag-stats
 wallabag-stats*.7z
