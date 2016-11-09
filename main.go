@@ -27,10 +27,20 @@ func main() {
 	handleFlags()
 
 	// check if lock file exists and exit, so we do not run this process two times
-	if _, err := os.Stat(lockFile); os.IsExist(err) {
-		fmt.Printf("main: lock file exists %s", lockFile)
+	if _, err := os.Stat(lockFile); os.IsNotExist(err) {
+		if *debug {
+			log.Printf("main: no lockfile %s present", lockFile)
+		}
+	} else {
+		fmt.Printf("abort: lock file exists %s\n", lockFile)
 		os.Exit(1)
 	}
+
+	// check for config before writing lock file to use os.Exit in case no config found
+	if *verbose {
+		log.Println("reading config")
+	}
+	wallabago.Config = getConfig()
 
 	// create lock file and delete it on exit of main
 	err := ioutil.WriteFile(lockFile, nil, 0644)
@@ -41,11 +51,6 @@ func main() {
 		panic(err)
 	}
 	defer os.Remove(lockFile)
-
-	if *verbose {
-		log.Println("reading config")
-	}
-	wallabago.Config = getConfig()
 
 	if *verbose {
 		log.Println("reading data json file into memory")
