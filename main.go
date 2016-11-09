@@ -70,7 +70,8 @@ func main() {
 	}
 
 	// comparing last data set with currently fetched data set
-	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
+	// also comparing each item of last data set for not being 0, but current being 0
+	if (wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred) || (wbgStats.Total[len(wbgStats.Total)-1] != 0 && total == 0) || (wbgStats.Unread[len(wbgStats.Unread)-1] != 0 && unread == 0) || (wbgStats.Starred[len(wbgStats.Starred)-1] != 0 && starred == 0) {
 		if *verbose {
 			log.Println("no data change since last call --> nothing to do")
 		}
