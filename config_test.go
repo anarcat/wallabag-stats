@@ -6,7 +6,7 @@ func TestReadJson(t *testing.T) {
 	var tests = []struct {
 		input                string
 		expectedWallabagURL  string
-		expectedClientId     string
+		expectedClientID     string
 		expectedClientSecret string
 		expectedUserName     string
 		expectedUserPassword string
@@ -16,13 +16,13 @@ func TestReadJson(t *testing.T) {
 		{"", "", "", "", "", "", false},
 	}
 	for _, test := range tests {
-		var raw []byte = []byte(test.input)
+		var raw = []byte(test.input)
 		c, e := readJSON(raw)
 		if c.WallabagURL != test.expectedWallabagURL {
 			t.Errorf("readJson(%v): expectedWallabagURL %v, got %v", test.input, test.expectedWallabagURL, c.WallabagURL)
 		}
-		if c.ClientID != test.expectedClientId {
-			t.Errorf("readJson(%v): expectedClientId %v, got %v", test.input, test.expectedClientId, c.ClientID)
+		if c.ClientID != test.expectedClientID {
+			t.Errorf("readJson(%v): expectedClientId %v, got %v", test.input, test.expectedClientID, c.ClientID)
 		}
 		if c.ClientSecret != test.expectedClientSecret {
 			t.Errorf("readJson(%v): expectedClientSecret %v, got %v", test.input, test.expectedClientSecret, c.ClientSecret)
@@ -35,7 +35,7 @@ func TestReadJson(t *testing.T) {
 		}
 		isErrNil := (e == nil)
 		if isErrNil != test.expectedIsErrNil {
-			t.Errorf("readJson(%v): expectedIsErrNil %v, got %v", test.expectedIsErrNil, isErrNil)
+			t.Errorf("readJson(%v): expectedIsErrNil %v, got %v", test.input, test.expectedIsErrNil, isErrNil)
 		}
 	}
 }
