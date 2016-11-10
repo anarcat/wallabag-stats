@@ -17,6 +17,12 @@ func getConfig() (wallabago.WallabagConfig, error) {
 	if err != nil {
 		return config, err
 	}
-	err = json.Unmarshal(raw, &config)
+	config, err = readJson(raw)
+	return config, err
+}
+
+func readJson(raw []byte) (wallabago.WallabagConfig, error) {
+	var config wallabago.WallabagConfig
+	err := json.Unmarshal(raw, &config)
 	return config, err
 }
