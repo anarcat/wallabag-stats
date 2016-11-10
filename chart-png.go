@@ -78,14 +78,14 @@ func generateChartPNG(wbgStats WallabagStats) {
 	err := graph.Render(chart.PNG, buffer)
 	if err != nil {
 		if *debug {
-			log.Fatal("generateChartPNG: error while rendering graph")
+			log.Println("generateChartPNG: error while rendering graph")
 		}
 		panic(err)
 	}
 	err = ioutil.WriteFile(*chartPNG, buffer.Bytes(), 0644)
 	if err != nil {
 		if *debug {
-			log.Fatal("generateChartPNG: error while writing png")
+			log.Println("generateChartPNG: error while writing png")
 		}
 		panic(err)
 	}
