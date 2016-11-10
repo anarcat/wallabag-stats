@@ -2,24 +2,21 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 
 	"github.com/Strubbl/wallabago"
 )
 
-func getConfig() wallabago.WallabagConfig {
+func getConfig() (wallabago.WallabagConfig, error) {
 	if *debug {
 		log.Printf("getConfig: file is %s", *configJSON)
 	}
 	var config wallabago.WallabagConfig
 	raw, err := ioutil.ReadFile(*configJSON)
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
+		return config, err
 	}
-	json.Unmarshal(raw, &config)
-	return config
+	err = json.Unmarshal(raw, &config)
+	return config, err
 }

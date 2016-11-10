@@ -40,10 +40,19 @@ func main() {
 	if *verbose {
 		log.Println("reading config")
 	}
-	wallabago.Config = getConfig()
+	c, err := getConfig()
+	if err == nil {
+		if *debug {
+			log.Println("main: setting wallabago.Config var")
+		}
+		wallabago.Config = c
+	} else {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
 
 	// create lock file and delete it on exit of main
-	err := ioutil.WriteFile(lockFile, nil, 0644)
+	err = ioutil.WriteFile(lockFile, nil, 0644)
 	if err != nil {
 		if *debug {
 			log.Println("main: error while writing lock file")
