@@ -18,7 +18,6 @@ fmt:
 
 lint:
 	@echo "+ $@"
-#	@golint ./... | tee /dev/stderr
 	@for d in `govendor list -no-status +local | sed 's/github.com.Strubbl.wallabag-stats/./' | grep -v wallabag-stats` ; do \
 		if [ "`golint $$d | tee /dev/stderr`"  ]; then \
 			echo "^ golint errors!" && echo && exit 1; \
@@ -27,11 +26,13 @@ lint:
 
 test: build fmt lint vet
 	@echo "+ $@"
-	@go test -v ./...
+	govendor test +local
 
 vet:
 	@echo "+ $@"
-	@go vet ./...
+	@if [ "`govendor vet +local | tee /dev/stderr`"  ]; then \
+		echo "^ go vet errors!" && echo && exit 1; \
+	fi
 
 clean:
 	@echo "+ $@"
