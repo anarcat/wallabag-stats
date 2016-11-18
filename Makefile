@@ -7,9 +7,9 @@ build: get-deps
 	@echo "+ $@"
 	@go build .
 
-get-deps:
+get-deps: govendor
 	@echo "+ $@"
-	@go get -t ./...
+	@go get -v -t ./...
 	@go get github.com/golang/lint/golint
 
 fmt:
@@ -18,7 +18,12 @@ fmt:
 
 lint:
 	@echo "+ $@"
-	@golint ./... | tee /dev/stderr
+#	@golint ./... | tee /dev/stderr
+	@for d in `govendor list -no-status +local | sed 's/github.com.Strubbl.wallabag-stats/./' | grep -v wallabag-stats` ; do \
+		if [ "`golint $$d | tee /dev/stderr`"  ]; then \
+			echo "^ golint errors!" && echo && exit 1; \
+		fi \
+	done
 
 test: build fmt lint vet
 	@echo "+ $@"
@@ -45,4 +50,10 @@ release:
 	@echo "+ $@"
 	@./scripts/release.sh > /dev/random 2>&1
 	@ls -lh *.7z
+
+govendor:
+	@echo "+ $@"
+	go get -u github.com/kardianos/govendor
+	go install github.com/kardianos/govendor
+	govendor sync github.com/Strubbl/wallabag-stats
 
