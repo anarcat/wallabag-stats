@@ -10,8 +10,8 @@ import (
 )
 
 func generateChartPNG(wbgStats WallabagStats) {
-	if *verbose {
-		log.Println("generating chart")
+	if *debug {
+		log.Println("generateChartPNG: start generating chart")
 	}
 	graph := chart.Chart{
 		XAxis: chart.XAxis{
