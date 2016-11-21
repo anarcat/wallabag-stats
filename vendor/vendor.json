@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "lQHA5MmK3pEG5Mh4JEuAI+0B0/g=",
+			"checksumSHA1": "cUC1dBWTh/UWqYnz8EYeYNKlgiY=",
 			"path": "github.com/Strubbl/wallabago",
-			"revision": "e997922cfdd08f82909b9d3f1918ea5aae899aff",
-			"revisionTime": "2016-10-05T19:12:30Z"
+			"revision": "9dc177cfc765b61284f06f492af07c79de095be4",
+			"revisionTime": "2016-11-21T18:21:14Z"
 		},
 		{
 			"checksumSHA1": "aJ/kX/eCUlrCJBZ26Hwh/RXzAIw=",
