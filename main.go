@@ -80,7 +80,9 @@ func main() {
 		log.Printf("main: unread: %v\n", unread)
 		log.Printf("main: starred: %v\n", starred)
 		log.Printf("main: time: %v\n", time.Now())
-		log.Printf("main: wbgStats: %v\n", wbgStats)
+		if *debugDebug {
+			log.Printf("main: wbgStats: %v\n", wbgStats)
+		}
 	}
 
 	// comparing last data set with currently fetched data set
@@ -98,7 +100,7 @@ func main() {
 		wbgStats.Unread = append(wbgStats.Unread, unread)
 		wbgStats.Starred = append(wbgStats.Starred, starred)
 
-		if *debug {
+		if *debugDebug {
 			log.Printf("main: wbgStats: %v\n", wbgStats)
 		}
 

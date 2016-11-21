@@ -14,6 +14,7 @@ const defaultDataJSON = "data.json"
 
 var dataOnly = flag.Bool("data-only", false, "collect data only, do not generate any charts")
 var debug = flag.Bool("d", false, "get debug output (implies verbose mode)")
+var debugDebug = flag.Bool("dd", false, "get even more debug output like data (implies debug mode)")
 var v = flag.Bool("v", false, "print version")
 var verbose = flag.Bool("verbose", false, "verbose mode")
 var chartPNG = flag.String("chart", defaultChartPNG, "file name to put the chart PNG")
@@ -31,12 +32,19 @@ func handleFlags() {
 		os.Exit(0)
 	}
 	// test verbose before debug because debug implies verbose
-	if *verbose && !*debug {
+	if *verbose && !*debug && !*debugDebug {
 		log.Printf("verbose mode")
 	}
-	if *debug {
+	if *debug && !*debugDebug {
 		log.Printf("handleFlags: debug mode")
 		// debug implies verbose
+		*verbose = true
+	}
+	if *debugDebug {
+		log.Printf("handleFlags: debug² mode")
+		// debugDebug implies debug
+		*debug = true
+		// and debug implies verbose
 		*verbose = true
 	}
 }
