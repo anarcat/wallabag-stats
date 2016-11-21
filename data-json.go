@@ -29,10 +29,16 @@ func readCurrentJSON(curJSON *WallabagStats) {
 	}
 	b, err := ioutil.ReadFile(*dataJSON)
 	if err != nil {
+		if *debug {
+			log.Println("readCurrentJSON: error while ioutil.ReadFile")
+		}
 		panic(err)
 	}
 	err = json.Unmarshal(b, curJSON)
 	if err != nil {
+		if *debug {
+			log.Println("readCurrentJSON: error while json.Unmarshal")
+		}
 		panic(err)
 	}
 }
