@@ -27,7 +27,7 @@ TODO :)
 ## wallabag-stats -h
 
 ```
-Usage of wallabag-stats:
+Usage of ./wallabag-stats:
   -chart string
     	file name to put the chart PNG (default "chart.png")
   -config string
@@ -35,6 +35,10 @@ Usage of wallabag-stats:
   -d	get debug output (implies verbose mode)
   -data string
     	file name of data JSON file (default "data.json")
+  -data-only
+    	collect data only, do not generate any charts
+  -dd
+    	get even more debug output like data (implies debug mode)
   -v	print version
   -verbose
     	verbose mode
