@@ -18,6 +18,17 @@ func printElapsedTime(start time.Time) {
 	}
 }
 
+func removeLockFile(lf string) {
+	if *debug {
+		log.Printf("removeLockFile: trying to delete %s\n", lf)
+	}
+	err := os.Remove(lf)
+	if err != nil {
+		log.Printf("removeLockFile: error while removing lock file %s\n", lf)
+		log.Panic(err)
+	}
+}
+
 func main() {
 	start := time.Now()
 	defer printElapsedTime(start)
@@ -59,7 +70,7 @@ func main() {
 		}
 		panic(err)
 	}
-	defer os.Remove(lockFile)
+	defer removeLockFile(lockFile)
 
 	if *verbose {
 		log.Println("reading data json file into memory")
