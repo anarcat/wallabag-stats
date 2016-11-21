@@ -91,9 +91,9 @@ func main() {
 		log.Printf("main: unread: %v\n", unread)
 		log.Printf("main: starred: %v\n", starred)
 		log.Printf("main: time: %v\n", time.Now())
-		if *debugDebug {
-			log.Printf("main: wbgStats: %v\n", wbgStats)
-		}
+	}
+	if *debugDebug {
+		log.Printf("main: wbgStats: %v\n", wbgStats)
 	}
 
 	// comparing last data set with currently fetched data set
@@ -119,10 +119,10 @@ func main() {
 			log.Print("writing data json file")
 		}
 		writeNewJSON(wbgStats)
-		if *verbose {
-			log.Print("generating chart PNG")
-		}
 		if !*dataOnly {
+			if *verbose {
+				log.Print("generating chart PNG")
+			}
 			generateChartPNG(wbgStats)
 		} else {
 			if *verbose {
