@@ -9,7 +9,6 @@ build: get-deps
 
 get-deps: govendor
 	@echo "+ $@"
-	@go get -v -t ./...
 	@go get github.com/golang/lint/golint
 
 fmt:
@@ -54,7 +53,6 @@ release:
 
 govendor:
 	@echo "+ $@"
-	go get -u github.com/kardianos/govendor
-	go install github.com/kardianos/govendor
-	govendor sync github.com/Strubbl/wallabag-stats
-
+	@go get -u github.com/kardianos/govendor
+	@go install github.com/kardianos/govendor
+	@govendor sync github.com/Strubbl/wallabag-stats
