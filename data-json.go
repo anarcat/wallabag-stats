@@ -9,13 +9,11 @@ import (
 )
 
 // WallabagStats is a data set representing the number of total, unread and starred articles in wallabg at a given time
-type OldWallabagStats struct {
-	Times   []time.Time
-	Total   []float64
-	Unread  []float64
-	Starred []float64
+type WallabagStats struct {
+	Data []OneWallabagStat
 }
 
+// OneWallabagStat represents one data set with the time stamp and the stat numbers at that time
 type OneWallabagStat struct {
 	Times   time.Time
 	Total   float64
@@ -23,11 +21,7 @@ type OneWallabagStat struct {
 	Starred float64
 }
 
-type WallabagStats struct {
-	Data []OneWallabagStat
-}
-
-func readCurrentJSON(curJSON *OldWallabagStats) {
+func readCurrentJSON(curJSON *WallabagStats) {
 	if *debug {
 		log.Println("readCurrentJSON")
 	}
@@ -54,7 +48,7 @@ func readCurrentJSON(curJSON *OldWallabagStats) {
 	}
 }
 
-func writeNewJSON(newWbgStats OldWallabagStats) {
+func writeNewJSON(newWbgStats WallabagStats) {
 	if *debug {
 		log.Println("writeNewJSON")
 	}

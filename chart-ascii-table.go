@@ -7,7 +7,7 @@ import (
 	"text/tabwriter"
 )
 
-func generateASCIITable(wbgStats OldWallabagStats, format string) {
+func generateASCIITable(wbgStats WallabagStats, format string) {
 	if *debug {
 		log.Println("generateASCIITable start")
 	}
@@ -15,10 +15,10 @@ func generateASCIITable(wbgStats OldWallabagStats, format string) {
 	fmt.Fprintf(tw, format, "No.", "Date", "Total", "Unread", "Starred")
 	fmt.Fprintf(tw, format, "---", "----", "-----", "------", "-------")
 	if *debug {
-		log.Printf("generateChartAsciiTable len(wbgStats.Times)=%v", len(wbgStats.Times))
+		log.Printf("generateChartAsciiTable len(wbgStats.Data)=%v", len(wbgStats.Data))
 	}
-	for i := 0; i < len(wbgStats.Times); i++ {
-		fmt.Fprintf(tw, format, i+1, wbgStats.Times[i].Format("2006-01-15 15:04:05"), wbgStats.Total[i], wbgStats.Unread[i], wbgStats.Starred[i])
+	for i := 0; i < len(wbgStats.Data); i++ {
+		fmt.Fprintf(tw, format, i+1, wbgStats.Data[i].Times.Format("2006-01-15 15:04:05"), wbgStats.Data[i].Total, wbgStats.Data[i].Unread, wbgStats.Data[i].Starred)
 	}
 	tw.Flush()
 	if *debug {

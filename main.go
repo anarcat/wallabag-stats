@@ -75,7 +75,7 @@ func main() {
 	if *verbose {
 		log.Println("reading data json file into memory")
 	}
-	var wbgStats OldWallabagStats
+	var wbgStats WallabagStats
 	readCurrentJSON(&wbgStats)
 
 	if *verbose {
