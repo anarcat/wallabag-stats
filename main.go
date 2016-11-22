@@ -134,6 +134,9 @@ func main() {
 		const format = "%v\t%v\t%v\t%v\t%v\t\n"
 		generateASCIITable(wbgStats, format)
 	}
+	if *prettyJSON {
+		generatePrettyJSON(wbgStats)
+	}
 	if *verbose {
 		log.Print("main program finish")
 	}
