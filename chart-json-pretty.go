@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func generatePrettyJSON(wbgStats WallabagStats) {
+func generatePrettyJSON(wbgStats OldWallabagStats) {
 	if *debug {
 		log.Println("generatePrettyJSON start")
 	}

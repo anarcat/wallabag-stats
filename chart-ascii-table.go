@@ -7,7 +7,7 @@ import (
 	"text/tabwriter"
 )
 
-func generateASCIITable(wbgStats WallabagStats, format string) {
+func generateASCIITable(wbgStats OldWallabagStats, format string) {
 	if *debug {
 		log.Println("generateASCIITable start")
 	}

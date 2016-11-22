@@ -9,7 +9,7 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-func generateChartPNG(wbgStats WallabagStats, pictureName string) {
+func generateChartPNG(wbgStats OldWallabagStats, pictureName string) {
 	if *debug {
 		log.Println("generateChartPNG: start generating chart")
 	}
