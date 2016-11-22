@@ -132,7 +132,7 @@ func main() {
 	}
 	if *printTable {
 		const format = "%v\t%v\t%v\t%v\t%v\t\n"
-		generateAsciiTable(wbgStats, format)
+		generateASCIITable(wbgStats, format)
 	}
 	if *verbose {
 		log.Print("main program finish")

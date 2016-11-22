@@ -7,9 +7,9 @@ import (
 	"text/tabwriter"
 )
 
-func generateAsciiTable(wbgStats WallabagStats, format string) {
+func generateASCIITable(wbgStats WallabagStats, format string) {
 	if *debug {
-		log.Println("generateChartAsciiTable start")
+		log.Println("generateASCIITable start")
 	}
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(tw, format, "No.", "Date", "Total", "Unread", "Starred")
@@ -22,6 +22,6 @@ func generateAsciiTable(wbgStats WallabagStats, format string) {
 	}
 	tw.Flush()
 	if *debug {
-		log.Println("generateChartAsciiTable end")
+		log.Println("generateASCIITable end")
 	}
 }
