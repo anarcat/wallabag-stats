@@ -7,11 +7,10 @@ import (
 	"text/tabwriter"
 )
 
-func generateChartAsciiTable(wbgStats WallabagStats) {
+func generateAsciiTable(wbgStats WallabagStats, format string) {
 	if *debug {
 		log.Println("generateChartAsciiTable start")
 	}
-	const format = "%v\t%v\t%v\t%v\t%v\t\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
 	fmt.Fprintf(tw, format, "No.", "Date", "Total", "Unread", "Starred")
 	fmt.Fprintf(tw, format, "---", "----", "-----", "------", "-------")

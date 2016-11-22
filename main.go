@@ -131,7 +131,8 @@ func main() {
 		}
 	}
 	if *printTable {
-		generateChartAsciiTable(wbgStats)
+		const format = "%v\t%v\t%v\t%v\t%v\t\n"
+		generateAsciiTable(wbgStats, format)
 	}
 	if *verbose {
 		log.Print("main program finish")
