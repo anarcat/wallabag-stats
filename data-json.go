@@ -9,6 +9,8 @@ import (
 )
 
 // WallabagStats is a data set representing the number of total, unread and starred articles in wallabg at a given time
+// This data format has been chosen to easily reuse the data for the axis in github.com/wcharczuk/go-chart. Otherwise
+// it would have made more sense to save one data set and create an array of data sets
 type WallabagStats struct {
 	Times   []time.Time
 	Total   []float64
