@@ -39,6 +39,8 @@ Usage of ./wallabag-stats:
     	collect data only, do not generate any charts
   -dd
     	get even more debug output like data (implies debug mode)
+  -print-table
+    	prints all data as ascii table
   -v	print version
   -verbose
     	verbose mode
