@@ -134,6 +134,18 @@ func main() {
 		const format = "%v\t%v\t%v\t%v\t%v\t\n"
 		generateASCIITable(wbgStats, format)
 	}
+
+	var newStruct WallabagStats
+	for i := 0; i < len(wbgStats.Starred); i++ {
+		var ows OneWallabagStat
+		ows.Total = wbgStats.Total[i]
+		ows.Starred = wbgStats.Starred[i]
+		ows.Unread = wbgStats.Unread[i]
+		ows.Times = wbgStats.Times[i]
+		newStruct.Data = append(newStruct.Data, ows)
+	}
+	generatePrettyNewJSON(newStruct)
+
 	if *prettyJSON {
 		generatePrettyJSON(wbgStats)
 	}

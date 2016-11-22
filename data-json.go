@@ -16,6 +16,17 @@ type OldWallabagStats struct {
 	Starred []float64
 }
 
+type OneWallabagStat struct {
+	Times   time.Time
+	Total   float64
+	Unread  float64
+	Starred float64
+}
+
+type WallabagStats struct {
+	Data []OneWallabagStat
+}
+
 func readCurrentJSON(curJSON *OldWallabagStats) {
 	if *debug {
 		log.Println("readCurrentJSON")
