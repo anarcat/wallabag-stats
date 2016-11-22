@@ -130,6 +130,9 @@ func main() {
 			}
 		}
 	}
+	if *printTable {
+		generateChartAsciiTable(wbgStats)
+	}
 	if *verbose {
 		log.Print("main program finish")
 	}
