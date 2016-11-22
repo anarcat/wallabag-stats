@@ -25,7 +25,7 @@ _testmain.go
 *.prof
 
 # Project specific
-chart.png
+chart*.png
 config.json
 data.json
 .lock

@@ -8,13 +8,14 @@ import (
 	"strings"
 )
 
-const defaultChartPNG = "chart.png"
+const defaultChartPNG = "html/chart-overall.png"
 const defaultConfigJSON = "config.json"
 const defaultDataJSON = "data.json"
 
 var dataOnly = flag.Bool("data-only", false, "collect data only, do not generate any charts")
 var printTable = flag.Bool("print-table", false, "prints all data as ascii table")
 var prettyJSON = flag.Bool("pretty-json", false, "prints all data as formatted json")
+var forceChart = flag.Bool("force", false, "force regeneration of chart even if no new data is present")
 var debug = flag.Bool("d", false, "get debug output (implies verbose mode)")
 var debugDebug = flag.Bool("dd", false, "get even more debug output like data (implies debug mode)")
 var v = flag.Bool("v", false, "print version")

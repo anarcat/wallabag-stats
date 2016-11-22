@@ -96,6 +96,8 @@ func main() {
 		log.Printf("main: wbgStats: %v\n", wbgStats)
 	}
 
+	wasChartGenerated := false
+
 	// comparing last data set with currently fetched data set
 	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
 		if *verbose {
@@ -133,11 +135,18 @@ func main() {
 				log.Print("generating chart PNG")
 			}
 			generateChartPNG(wbgStats, *chartPNG)
+			wasChartGenerated = true
 		} else {
 			if *verbose {
 				log.Print("not generating charts due to data-only flag")
 			}
 		}
+	}
+	if *forceChart && !wasChartGenerated {
+		if *verbose {
+			log.Print("generating chart PNG because of force flag")
+		}
+		generateChartPNG(wbgStats, *chartPNG)
 	}
 	if *printTable {
 		const format = "%v\t%v\t%v\t%v\t%v\t\n"
