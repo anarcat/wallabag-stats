@@ -9,7 +9,7 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-func generateChartPNG(wbgStats WallabagStats) {
+func generateChartPNG(wbgStats WallabagStats, pictureName string) {
 	if *debug {
 		log.Println("generateChartPNG: start generating chart")
 	}
@@ -82,7 +82,7 @@ func generateChartPNG(wbgStats WallabagStats) {
 		}
 		panic(err)
 	}
-	err = ioutil.WriteFile(*chartPNG, buffer.Bytes(), 0644)
+	err = ioutil.WriteFile(pictureName, buffer.Bytes(), 0644)
 	if err != nil {
 		if *debug {
 			log.Println("generateChartPNG: error while writing png")

@@ -123,7 +123,7 @@ func main() {
 			if *verbose {
 				log.Print("generating chart PNG")
 			}
-			generateChartPNG(wbgStats)
+			generateChartPNG(wbgStats, *chartPNG)
 		} else {
 			if *verbose {
 				log.Print("not generating charts due to data-only flag")
