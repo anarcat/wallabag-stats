@@ -5,7 +5,30 @@ import (
 	"time"
 )
 
-func generateOutput(wbgStats *WallabagStats, total, archived, unread, starred float64) bool {
+func getWallabagStatsSubset(wbgStats *WallabagStats, duration time.Duration) WallabagStats {
+	var subset WallabagStats
+	since := time.Now().Add(duration)
+	if *debug {
+		log.Printf("getWallabagStatsSubset: since=%v", since)
+	}
+	var sinceDataSetNumber int
+	for i := 1; i < len(wbgStats.Times); i++ {
+		if wbgStats.Times[i].After(since) && wbgStats.Times[i-1].Before(since) {
+			sinceDataSetNumber = i
+			break
+		}
+	}
+	if *debug {
+		log.Printf("getWallabagStatsSubset: sinceDataSetNumber=%v", sinceDataSetNumber)
+	}
+	subset.Times = wbgStats.Times[sinceDataSetNumber:]
+	subset.Total = wbgStats.Total[sinceDataSetNumber:]
+	subset.Unread = wbgStats.Unread[sinceDataSetNumber:]
+	subset.Starred = wbgStats.Starred[sinceDataSetNumber:]
+	return subset
+}
+
+func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, starred float64) bool {
 	if isDataSetNew(wbgStats, total, archived, unread, starred) == true {
 		if *verbose {
 			log.Println("found new stats data set")
@@ -25,9 +48,9 @@ func generateOutput(wbgStats *WallabagStats, total, archived, unread, starred fl
 		writeNewJSON(wbgStats)
 		if !*dataOnly {
 			if *verbose {
-				log.Print("generating chart PNG")
+				log.Print("generating output")
 			}
-			generateChartPNG(wbgStats, *chartPNG)
+			generateOutput(wbgStats)
 		} else {
 			if *verbose {
 				log.Print("not generating charts due to data-only flag")
@@ -36,4 +59,20 @@ func generateOutput(wbgStats *WallabagStats, total, archived, unread, starred fl
 		return true
 	}
 	return false
+}
+
+func generateOutput(wbgStats *WallabagStats) {
+	wbgStatsLastDay := getWallabagStatsSubset(&wbgStats, -24*time.Hour)
+	wbgStatsLastWeek := getWallabagStatsSubset(&wbgStats, -7*24*time.Hour)
+	wbgStatsLastMonth := getWallabagStatsSubset(&wbgStats, -30*24*time.Hour)
+	wbgStatsLastYear := getWallabagStatsSubset(&wbgStats, -365*24*time.Hour)
+
+	if *debug {
+		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastDay=%v", len(wbgStats.Times), len(wbgStatsLastDay.Times))
+		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastWeek=%v", len(wbgStats.Times), len(wbgStatsLastWeek.Times))
+		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastMonth=%v", len(wbgStats.Times), len(wbgStatsLastMonth.Times))
+		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastYear=%v", len(wbgStats.Times), len(wbgStatsLastYear.Times))
+	}
+
+	generateChartPNG(wbgStats, *chartPNG)
 }

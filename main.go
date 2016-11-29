@@ -96,13 +96,13 @@ func main() {
 		log.Printf("main: wbgStats: %v\n", wbgStats)
 	}
 
-	wasChartGenerated := generateOutput(&wbgStats, total, archived, unread, starred)
+	wasChartGenerated := generateOutputIfNewData(&wbgStats, total, archived, unread, starred)
 
 	if *forceChart && !wasChartGenerated {
 		if *verbose {
-			log.Print("generating chart PNG because of force flag")
+			log.Print("generating output because of force flag")
 		}
-		generateChartPNG(&wbgStats, *chartPNG)
+		generateOutput(&wbgStats)
 	}
 	if *printTable {
 		const format = "%v\t%v\t%v\t%v\t%v\t\n"
