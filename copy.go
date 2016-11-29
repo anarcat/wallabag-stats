@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 )
 
-// by dst. The file will be created if it does not already exist. If the
+// CopyFile by dst. The file will be created if it does not already exist. If the
 // destination file exists, all it's contents will be replaced by the contents
 // of the source file. The file mode will be copied from the source and
 // the copied data is synced/flushed to stable storage.
