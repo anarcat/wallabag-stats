@@ -24,6 +24,10 @@ _testmain.go
 *.test
 *.prof
 
+# editors
+*.bak
+*~
+
 # Project specific
 chart*.png
 config.json
