@@ -29,5 +29,6 @@ chart*.png
 config.json
 data.json
 .lock
+output/
 wallabag-stats
 wallabag-stats*.7z

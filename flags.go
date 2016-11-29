@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const defaultChartPNG = "html/chart-"
+const defaultChartPNG = "output/chart-"
 const defaultConfigJSON = "config.json"
 const defaultDataJSON = "data.json"
 
