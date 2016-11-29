@@ -15,7 +15,7 @@ func generatePrettyJSON(wbgStats WallabagStats) {
 		if *debug {
 			log.Println("generatePrettyJSON: error while marshalling wbgStats json")
 		}
-		panic(err)
+		fmt.Println(err)
 	}
 	fmt.Printf("%s\n", j)
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -18,7 +19,7 @@ type WallabagStats struct {
 	Starred []float64
 }
 
-func readCurrentJSON(curJSON *WallabagStats) {
+func readCurrentJSON(curJSON *WallabagStats) error {
 	if *debug {
 		log.Println("readCurrentJSON")
 	}
@@ -27,40 +28,43 @@ func readCurrentJSON(curJSON *WallabagStats) {
 		if *verbose { // not fatal, just start with a new one
 			log.Printf("file does not exist %s", *dataJSON)
 		}
-		return
+		return nil
 	}
 	b, err := ioutil.ReadFile(*dataJSON)
 	if err != nil {
 		if *debug {
-			log.Println("readCurrentJSON: error while ioutil.ReadFile")
+			log.Println("readCurrentJSON: error while ioutil.ReadFile", err)
 		}
-		panic(err)
+		fmt.Println(err)
+		return err
 	}
 	err = json.Unmarshal(b, curJSON)
 	if err != nil {
 		if *debug {
-			log.Println("readCurrentJSON: error while json.Unmarshal")
+			log.Println("readCurrentJSON: error while json.Unmarshal", err)
 		}
-		panic(err)
+		return err
 	}
+	return nil
 }
 
-func writeNewJSON(newWbgStats *WallabagStats) {
+func writeNewJSON(newWbgStats *WallabagStats) error {
 	if *debug {
 		log.Println("writeNewJSON")
 	}
 	b, err := json.Marshal(newWbgStats)
 	if err != nil {
 		if *debug {
-			log.Println("writeNewJSON: error while marshalling data json")
+			log.Println("writeNewJSON: error while marshalling data json", err)
 		}
-		panic(err)
+		return err
 	}
 	err = ioutil.WriteFile(*dataJSON, b, 0644)
 	if err != nil {
 		if *debug {
-			log.Println("writeNewJSON: error while writing data json")
+			log.Println("writeNewJSON: error while writing data json", err)
 		}
-		panic(err)
+		return err
 	}
+	return nil
 }

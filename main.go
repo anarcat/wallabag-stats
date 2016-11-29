@@ -76,7 +76,10 @@ func main() {
 		log.Println("reading data json file into memory")
 	}
 	var wbgStats WallabagStats
-	readCurrentJSON(&wbgStats)
+	err = readCurrentJSON(&wbgStats)
+	if err != nil {
+		panic(err)
+	}
 
 	if *verbose {
 		log.Println("get current stats data set from Wallabag")

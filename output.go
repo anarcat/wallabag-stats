@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 )
@@ -47,7 +48,10 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 		if *verbose {
 			log.Print("writing data json file")
 		}
-		writeNewJSON(wbgStats)
+		err := writeNewJSON(wbgStats)
+		if err != nil {
+			fmt.Println(err)
+		}
 		if !*dataOnly {
 			if *verbose {
 				log.Print("generating output")
