@@ -29,7 +29,7 @@ TODO :)
 ```
 Usage of ./wallabag-stats:
   -chart string
-    	file name to put the chart PNG (default "chart.png")
+    	file name to put the chart PNG (default "html/chart-overall.png")
   -config string
     	file name of config JSON file (default "config.json")
   -d	get debug output (implies verbose mode)
@@ -39,6 +39,10 @@ Usage of ./wallabag-stats:
     	collect data only, do not generate any charts
   -dd
     	get even more debug output like data (implies debug mode)
+  -force
+    	force regeneration of chart even if no new data is present
+  -pretty-json
+    	prints all data as formatted json
   -print-table
     	prints all data as ascii table
   -v	print version
