@@ -75,5 +75,19 @@ func generateOutput(wbgStats *WallabagStats) {
 		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastYear=%v", len(wbgStats.Times), len(wbgStatsLastYear.Times))
 	}
 
-	generateChartPNG(wbgStats, *chartPNGPrefix+"overall"+pngFileSuffix)
+	if len(wbgStats.Times) > 1 {
+		generateChartPNG(wbgStats, *chartPNGPrefix+"overall"+pngFileSuffix)
+	}
+	if len(wbgStatsLastDay.Times) > 1 {
+		generateChartPNG(&wbgStatsLastDay, *chartPNGPrefix+"day"+pngFileSuffix)
+	}
+	if len(wbgStatsLastWeek.Times) > 1 {
+		generateChartPNG(&wbgStatsLastWeek, *chartPNGPrefix+"week"+pngFileSuffix)
+	}
+	if len(wbgStatsLastMonth.Times) > 1 {
+		generateChartPNG(&wbgStatsLastMonth, *chartPNGPrefix+"month"+pngFileSuffix)
+	}
+	if len(wbgStatsLastYear.Times) > 1 {
+		generateChartPNG(&wbgStatsLastYear, *chartPNGPrefix+"year"+pngFileSuffix)
+	}
 }
