@@ -1,8 +1,35 @@
 package main
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
+
+func isDataAllEqualLengths(times, total, unread, starred int) bool {
+	numbers := [4]int{times, total, unread, starred}
+	if *debug {
+		log.Printf("isDataAllEqualLengths: numbers=%v", numbers)
+	}
+	for i := 0; i < len(numbers); i++ {
+		for m := 0; m < len(numbers); m++ {
+			if i == m {
+				continue
+			}
+			if *debugDebug {
+				log.Printf("isDataAllEqualLengths: comparing numbers[%v]=%v with numbers[%v]=%v", i, numbers[i], m, numbers[m])
+			}
+			if numbers[i] != numbers[m] {
+				return false
+			}
+		}
+	}
+	return true
+}
 
 func isDataSetNew(wbgStats *WallabagStats, total, archived, unread, starred float64) bool {
+	if !isDataAllEqualLengths(len(wbgStats.Times), len(wbgStats.Total), len(wbgStats.Unread), len(wbgStats.Starred)) {
+		fmt.Println("error: data set from JSON file is not valid, because array sizes have different length")
+	}
 	// comparing last data set with currently fetched data set
 	if wbgStats.Total[len(wbgStats.Total)-1] == total && wbgStats.Unread[len(wbgStats.Unread)-1] == unread && wbgStats.Starred[len(wbgStats.Starred)-1] == starred {
 		if *verbose {
