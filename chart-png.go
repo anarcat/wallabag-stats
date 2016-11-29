@@ -11,7 +11,7 @@ import (
 
 func generateChartPNG(wbgStats *WallabagStats, pictureName string) {
 	if *debug {
-		log.Println("generateChartPNG: start generating chart")
+		log.Printf("generateChartPNG: start generating chart in file pictureName=%v", pictureName)
 	}
 	graph := chart.Chart{
 		XAxis: chart.XAxis{

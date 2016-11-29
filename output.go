@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+const pngFileSuffix = ".png"
+
 func getWallabagStatsSubset(wbgStats *WallabagStats, duration time.Duration) WallabagStats {
 	var subset WallabagStats
 	since := time.Now().Add(duration)
@@ -62,11 +64,10 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 }
 
 func generateOutput(wbgStats *WallabagStats) {
-	wbgStatsLastDay := getWallabagStatsSubset(&wbgStats, -24*time.Hour)
-	wbgStatsLastWeek := getWallabagStatsSubset(&wbgStats, -7*24*time.Hour)
-	wbgStatsLastMonth := getWallabagStatsSubset(&wbgStats, -30*24*time.Hour)
-	wbgStatsLastYear := getWallabagStatsSubset(&wbgStats, -365*24*time.Hour)
-
+	wbgStatsLastDay := getWallabagStatsSubset(wbgStats, -24*time.Hour)
+	wbgStatsLastWeek := getWallabagStatsSubset(wbgStats, -7*24*time.Hour)
+	wbgStatsLastMonth := getWallabagStatsSubset(wbgStats, -30*24*time.Hour)
+	wbgStatsLastYear := getWallabagStatsSubset(wbgStats, -365*24*time.Hour)
 	if *debug {
 		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastDay=%v", len(wbgStats.Times), len(wbgStatsLastDay.Times))
 		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastWeek=%v", len(wbgStats.Times), len(wbgStatsLastWeek.Times))
@@ -74,5 +75,5 @@ func generateOutput(wbgStats *WallabagStats) {
 		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastYear=%v", len(wbgStats.Times), len(wbgStatsLastYear.Times))
 	}
 
-	generateChartPNG(wbgStats, *chartPNG)
+	generateChartPNG(wbgStats, *chartPNGPrefix+"overall"+pngFileSuffix)
 }
