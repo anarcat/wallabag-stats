@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>wallabag Statistics</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css" integrity="sha384-AnkzRSe4D0OPNWdNFQAogo5tND3Tq+QkxgsAW0z1l1FsZFL9JM4Ny4eOnprBjSHl" crossorigin="anonymous">
+  </head>
+  <body>
+	<nav class="navbar navbar-dark bg-inverse">
+	  <a class="navbar-brand" data-toggle="tab" href="index.html">wallabag Statistics <span class="sr-only">(current)</span></a>
+	  <ul class="nav navbar-nav">
+	    <li class="nav-item">
+	      <a class="nav-link" href="index.html">Graphs</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link disabled" href="#">Data Table</a>
+	    </li>
+	  </ul>
+	</nav>
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link" role="tab" data-toggle="tab" href="#twentyfourhours">Last Day</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" role="tab" data-toggle="tab" href="#sevendays">Last Week</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" role="tab" data-toggle="tab" href="#fourweeks">Last Month</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" role="tab" data-toggle="tab" href="#twelvemonths">Last Year</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link active" role="tab" data-toggle="tab" href="#overall">Overall</a>
+	  </li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+	  <div class="tab-pane" id="twentyfourhours" role="tabpanel">
+		<h2>Chart Last Day</h2>
+	  </div>
+	  <div class="tab-pane" id="sevendays" role="tabpanel">
+		<h2>Chart Last Week</h2>
+	  </div>
+	  <div class="tab-pane" id="fourweeks" role="tabpanel">
+		<h2>Chart Last Month</h2>
+	  </div>
+	  <div class="tab-pane" id="twelvemonths" role="tabpanel">
+		<h2>Chart Last Year</h2>
+	  </div>
+	  <div class="tab-pane active" id="overall" role="tabpanel">
+	    <h2>Chart Overall</h2>
+		<p><img src="chart-overall.png" /></p>
+	  </div>
+	</div>
+
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="js/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+    <script src="js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+  </body>
+</html>
