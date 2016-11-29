@@ -45,7 +45,7 @@ func readCurrentJSON(curJSON *WallabagStats) {
 	}
 }
 
-func writeNewJSON(newWbgStats WallabagStats) {
+func writeNewJSON(newWbgStats *WallabagStats) {
 	if *debug {
 		log.Println("writeNewJSON")
 	}
