@@ -15,7 +15,8 @@ func TestIsDataSetNew(t *testing.T) {
 		expectedResult bool
 	}{
 		{WallabagStats{Times: []time.Time{}, Total: []float64{}, Unread: []float64{}, Starred: []float64{}}, 1, 1, 0, 0, true},
-		{},
+		{WallabagStats{}, 0, 0, 0, 0, true},
+		{WallabagStats{Times: []time.Time{time.Now()}, Total: []float64{0}, Unread: []float64{0}, Starred: []float64{0}}, 1, 1, 0, 0, true},
 	}
 	for _, test := range tests {
 		b := isDataSetNew(&test.w, test.total, test.archived, test.unread, test.starred)
