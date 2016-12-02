@@ -20,8 +20,10 @@ if [ -n "$bin" ]; then
   mkdir $releasefolder
   cp "$bin" "$releasefolder/$bin-$version"
   cp "example/config.json" "$releasefolder/"
+  cp -r html "$releasefolder/"
+  mkdir -p "$releasefolder/output"
   strip "$releasefolder/$bin-$version"
-  7z a "$bin-$version-$arch.7z" "$releasefolder"
+  7z -mx=9 a "$bin-$version-$arch.7z" "$releasefolder"
   rm -r "$releasefolder"
 fi
 
