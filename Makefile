@@ -56,3 +56,8 @@ govendor:
 	@go get -u github.com/kardianos/govendor
 	@go install github.com/kardianos/govendor
 	@govendor sync github.com/Strubbl/wallabag-stats
+
+update-vendor:
+	@echo "+ $@"
+	@govendor fetch -v +vendor
+
