@@ -68,9 +68,9 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 }
 
 func generateOutput(wbgStats *WallabagStats) {
-	err := CopyDir("html", "output")
+	err := CopyDir("tmpl/static", "output")
 	if err != nil {
-		fmt.Println("error while copying contents from html/ dir to output/ dir. Error: ", err)
+		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
 	}
 	wbgStatsLastDay := getWallabagStatsSubset(wbgStats, -24*time.Hour)
 	wbgStatsLastWeek := getWallabagStatsSubset(wbgStats, -7*24*time.Hour)
