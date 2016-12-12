@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"os"
@@ -86,10 +85,6 @@ func writeTemplateToHTML(wbgStats *WallabagStats, templateName string, isDayGene
 func generateHTML(wbgStats *WallabagStats, isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated bool) {
 	if *debug {
 		log.Println("generateHTML start")
-	}
-	err := CopyDir("tmpl/static", outputDirectory)
-	if err != nil {
-		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
 	}
 	writeTemplateToHTML(wbgStats, "data-table", isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
 	writeTemplateToHTML(wbgStats, "index", isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
