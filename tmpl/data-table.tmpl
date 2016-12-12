@@ -20,14 +20,14 @@
 			<th>Unread</th>
 			<th>Starred</th>
 		</tr>
-		{{range .}}<tr>
+		{{range .TableData}}<tr>
 			<td>{{ .No }}</td>
 			<td>{{ .Times }}</td>
 			<td>{{ .Total }}</td>
 			<td>{{ .Unread }}</td>
 			<td>{{ .Starred }}</td>
 		</tr>
-		{{else}}<tr colspan="5"><strong>no data</strong></tr>{{end}}
+		{{else}}<tr><td colspan="5"><strong>no data</strong></td></tr>{{end}}
 	</table>
 
 {{template "footer.tmpl" .}}
