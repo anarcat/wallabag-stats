@@ -8,6 +8,11 @@ import (
 
 const outputDirectory = "output"
 const pngFileSuffix = ".png"
+const chartOverallPath = outputDirectory + "/chart-overall" + pngFileSuffix
+const chartDayPath = outputDirectory + "/chart-day" + pngFileSuffix
+const chartWeekPath = outputDirectory + "/chart-week" + pngFileSuffix
+const chartMonthPath = outputDirectory + "/chart-month" + pngFileSuffix
+const chartYearPath = outputDirectory + "/chart-year" + pngFileSuffix
 
 func getWallabagStatsSubset(wbgStats *WallabagStats, duration time.Duration) WallabagStats {
 	var subset WallabagStats
@@ -68,7 +73,7 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 	return false
 }
 
-func generateCharts(wbgStats *WallabagStats) {
+func generateCharts(wbgStats *WallabagStats) (isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated bool) {
 	wbgStatsLastDay := getWallabagStatsSubset(wbgStats, -24*time.Hour)
 	wbgStatsLastWeek := getWallabagStatsSubset(wbgStats, -7*24*time.Hour)
 	wbgStatsLastMonth := getWallabagStatsSubset(wbgStats, -30*24*time.Hour)
@@ -82,23 +87,29 @@ func generateCharts(wbgStats *WallabagStats) {
 
 	// generate only if at least two data rows are available
 	if len(wbgStats.Times) > 1 {
-		generateChartPNG(wbgStats, outputDirectory+"/chart-overall"+pngFileSuffix)
+		generateChartPNG(wbgStats, chartOverallPath)
+		isOverallGenerated = true
 	}
 	if len(wbgStatsLastDay.Times) > 1 && len(wbgStatsLastDay.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastDay, outputDirectory+"/chart-day"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastDay, chartDayPath)
+		isDayGenerated = true
 	}
 	if len(wbgStatsLastWeek.Times) > 1 && len(wbgStatsLastWeek.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastWeek, outputDirectory+"/chart-week"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastWeek, chartWeekPath)
+		isWeekGenerated = true
 	}
 	if len(wbgStatsLastMonth.Times) > 1 && len(wbgStatsLastMonth.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastMonth, outputDirectory+"/chart-month"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastMonth, chartMonthPath)
+		isMonthGenerated = true
 	}
 	if len(wbgStatsLastYear.Times) > 1 && len(wbgStatsLastYear.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastYear, outputDirectory+"/chart-year"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastYear, chartYearPath)
+		isYearGenerated = true
 	}
+	return isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated
 }
 
 func generateOutput(wbgStats *WallabagStats) {
-	generateCharts(wbgStats)
-	generateHTML(wbgStats)
+	isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated := generateCharts(wbgStats)
+	generateHTML(wbgStats, isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
 }

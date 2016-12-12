@@ -14,44 +14,49 @@
 
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item">
-	    <a class="nav-link" role="tab" data-toggle="tab" href="#twentyfourhours">Last Day</a>
+	    <a class="nav-link{{if .IsDayGenerated}}{{else}} disabled{{end}}" role="tab" data-toggle="tab" href="#{{if .IsDayGenerated}}twentyfourhours{{end}}">Last Day</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" role="tab" data-toggle="tab" href="#sevendays">Last Week</a>
+	    <a class="nav-link{{if .IsWeekGenerated}}{{else}} disabled{{end}}" role="tab" data-toggle="tab" href="#{{if .IsWeekGenerated}}sevendays{{end}}">Last Week</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" role="tab" data-toggle="tab" href="#fourweeks">Last Month</a>
+	    <a class="nav-link{{if .IsMonthGenerated}}{{else}} disabled{{end}}" role="tab" data-toggle="tab" href="#{{if .IsMonthGenerated}}fourweeks{{end}}">Last Month</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" role="tab" data-toggle="tab" href="#twelvemonths">Last Year</a>
+	    <a class="nav-link{{if .IsYearGenerated}}{{else}} disabled{{end}}" role="tab" data-toggle="tab" href="#{{if .IsYearGenerated}}twelvemonths{{end}}">Last Year</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" role="tab" data-toggle="tab" href="#overall">Overall</a>
+	    <a class="nav-link active{{if .IsOverallGenerated}}{{else}} disabled{{end}}" role="tab" data-toggle="tab" href="#{{if .IsOverallGenerated}}overall{{end}}">Overall</a>
 	  </li>
 	</ul>
 
 	<!-- Tab panes -->
 	<div class="tab-content">
-	  <div class="tab-pane" id="twentyfourhours" role="tabpanel">
+{{if .IsDayGenerated}}	  <div class="tab-pane" id="twentyfourhours" role="tabpanel">
 		<h2>Chart Last Day</h2>
-		<p><img src="chart-day.png" class="img-fluid" /></p>
-	  </div>
-	  <div class="tab-pane" id="sevendays" role="tabpanel">
+		<p><img src="chart-day.png" class="img-fluid" /><br />
+		chart generated at {{ .GenDayTime }}</p>
+	  </div>{{end}}
+{{if .IsWeekGenerated}}	  <div class="tab-pane" id="sevendays" role="tabpanel">
 		<h2>Chart Last Week</h2>
-		<p><img src="chart-week.png" class="img-fluid" /></p>
-	  </div>
-	  <div class="tab-pane" id="fourweeks" role="tabpanel">
+		<p><img src="chart-week.png" class="img-fluid" /><br />
+		chart generated at {{ .GenWeekTime }}</p>
+	  </div>{{end}}
+{{if .IsMonthGenerated}}	  <div class="tab-pane" id="fourweeks" role="tabpanel">
 		<h2>Chart Last Month</h2>
-		<p><img src="chart-month.png" class="img-fluid" /></p>
-	  </div>
-	  <div class="tab-pane" id="twelvemonths" role="tabpanel">
+		<p><img src="chart-month.png" class="img-fluid" /><br />
+		chart generated at {{ .GenMonthTime }}</p>
+	  </div>{{end}}
+{{if .IsYearGenerated}}	  <div class="tab-pane" id="twelvemonths" role="tabpanel">
 		<h2>Chart Last Year</h2>
-		<p><img src="chart-year.png" class="img-fluid" /></p>
-	  </div>
-	  <div class="tab-pane active" id="overall" role="tabpanel">
+		<p><img src="chart-year.png" class="img-fluid" /><br />
+		chart generated at {{ .GenYearTime }}</p>
+	  </div>{{end}}
+{{if .IsOverallGenerated}}	  <div class="tab-pane active" id="overall" role="tabpanel">
 	    <h2>Chart Overall</h2>
-		<p><img src="chart-overall.png" class="img-fluid" /></p>
+		<p><img src="chart-overall.png" class="img-fluid" /><br />
+		chart generated at {{ .GenOverallTime }}</p>
 	  </div>
-	</div>
+	</div>{{end}}
 
 {{template "footer.tmpl" .}}

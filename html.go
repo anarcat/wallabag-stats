@@ -19,13 +19,32 @@ type dataRow struct {
 }
 
 type templateData struct {
-	TableData []dataRow
-	GenTime   time.Time
+	TableData          []dataRow
+	GenTime            time.Time
+	GenOverallTime     time.Time
+	GenDayTime         time.Time
+	GenWeekTime        time.Time
+	GenMonthTime       time.Time
+	GenYearTime        time.Time
+	IsDayGenerated     bool
+	IsWeekGenerated    bool
+	IsMonthGenerated   bool
+	IsYearGenerated    bool
+	IsOverallGenerated bool
 }
 
-func writeTemplateToHTML(wbgStats *WallabagStats, templateName string) {
+func getLastModTime(filePath string, lastModTime *time.Time) {
+	fi, err := os.Stat(filePath)
+	if err != nil {
+		log.Println("getLastModTime", err)
+		return
+	}
+	*lastModTime = fi.ModTime()
+}
+
+func writeTemplateToHTML(wbgStats *WallabagStats, templateName string, isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated bool) {
 	if *debug {
-		log.Printf("writeTemplateToHTML templateName=%v", templateName)
+		log.Printf("writeTemplateToHTML templateName=%v isDayGenerated=%v", templateName, isDayGenerated)
 	}
 	f, err := os.Create(outputDirectory + "/" + templateName + ".html")
 	if err != nil {
@@ -45,16 +64,26 @@ func writeTemplateToHTML(wbgStats *WallabagStats, templateName string) {
 		td.TableData[i] = d
 	}
 
+	getLastModTime(chartOverallPath, &td.GenOverallTime)
+	getLastModTime(chartDayPath, &td.GenDayTime)
+	getLastModTime(chartWeekPath, &td.GenWeekTime)
+	getLastModTime(chartMonthPath, &td.GenMonthTime)
+	getLastModTime(chartYearPath, &td.GenYearTime)
+	td.IsDayGenerated = isDayGenerated
+	td.IsWeekGenerated = isWeekGenerated
+	td.IsMonthGenerated = isMonthGenerated
+	td.IsYearGenerated = isYearGenerated
+	td.IsOverallGenerated = isOverallGenerated
 	td.GenTime = time.Now()
 
-	htmlTable, err := template.ParseFiles(tmplDirectory+"/"+templateName+".tmpl", tmplDirectory+"/header.tmpl", tmplDirectory+"/footer.tmpl")
+	htmlSource, err := template.ParseFiles(tmplDirectory+"/"+templateName+".tmpl", tmplDirectory+"/header.tmpl", tmplDirectory+"/footer.tmpl")
 	if err != nil {
 		log.Println("writeTemplateToHTML", err)
 	}
-	htmlTable.Execute(f, td)
+	htmlSource.Execute(f, td)
 }
 
-func generateHTML(wbgStats *WallabagStats) {
+func generateHTML(wbgStats *WallabagStats, isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated bool) {
 	if *debug {
 		log.Println("generateHTML start")
 	}
@@ -62,8 +91,8 @@ func generateHTML(wbgStats *WallabagStats) {
 	if err != nil {
 		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
 	}
-	writeTemplateToHTML(wbgStats, "data-table")
-	writeTemplateToHTML(wbgStats, "index")
+	writeTemplateToHTML(wbgStats, "data-table", isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
+	writeTemplateToHTML(wbgStats, "index", isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
 
 	if *debug {
 		log.Println("generateHTML end")
