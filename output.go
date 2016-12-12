@@ -82,19 +82,19 @@ func generateCharts(wbgStats *WallabagStats) {
 
 	// generate only if at least two data rows are available
 	if len(wbgStats.Times) > 1 {
-		generateChartPNG(wbgStats, *chartPNGPrefix+"overall"+pngFileSuffix)
+		generateChartPNG(wbgStats, outputDirectory+"/chart-overall"+pngFileSuffix)
 	}
 	if len(wbgStatsLastDay.Times) > 1 && len(wbgStatsLastDay.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastDay, *chartPNGPrefix+"day"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastDay, outputDirectory+"/chart-day"+pngFileSuffix)
 	}
 	if len(wbgStatsLastWeek.Times) > 1 && len(wbgStatsLastWeek.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastWeek, *chartPNGPrefix+"week"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastWeek, outputDirectory+"/chart-week"+pngFileSuffix)
 	}
 	if len(wbgStatsLastMonth.Times) > 1 && len(wbgStatsLastMonth.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastMonth, *chartPNGPrefix+"month"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastMonth, outputDirectory+"/chart-month"+pngFileSuffix)
 	}
 	if len(wbgStatsLastYear.Times) > 1 && len(wbgStatsLastYear.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastYear, *chartPNGPrefix+"year"+pngFileSuffix)
+		generateChartPNG(&wbgStatsLastYear, outputDirectory+"/chart-year"+pngFileSuffix)
 	}
 }
 

@@ -28,8 +28,6 @@ TODO :)
 
 ```
 Usage of ./wallabag-stats:
-  -chart string
-    	file name prefix for the chart PNGs (default "output/chart-")
   -config string
     	file name of config JSON file (default "config.json")
   -d	get debug output (implies verbose mode)
