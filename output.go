@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+const outputDirectory = "output"
 const pngFileSuffix = ".png"
 
 func getWallabagStatsSubset(wbgStats *WallabagStats, duration time.Duration) WallabagStats {
@@ -68,10 +69,11 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 }
 
 func generateOutput(wbgStats *WallabagStats) {
-	err := CopyDir("tmpl/static", "output")
+	err := CopyDir("tmpl/static", outputDirectory)
 	if err != nil {
 		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
 	}
+	generateHTML(wbgStats)
 	wbgStatsLastDay := getWallabagStatsSubset(wbgStats, -24*time.Hour)
 	wbgStatsLastWeek := getWallabagStatsSubset(wbgStats, -7*24*time.Hour)
 	wbgStatsLastMonth := getWallabagStatsSubset(wbgStats, -30*24*time.Hour)
