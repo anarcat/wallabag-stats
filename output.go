@@ -68,12 +68,7 @@ func generateOutputIfNewData(wbgStats *WallabagStats, total, archived, unread, s
 	return false
 }
 
-func generateOutput(wbgStats *WallabagStats) {
-	err := CopyDir("tmpl/static", outputDirectory)
-	if err != nil {
-		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
-	}
-	generateHTML(wbgStats)
+func generateCharts(wbgStats *WallabagStats) {
 	wbgStatsLastDay := getWallabagStatsSubset(wbgStats, -24*time.Hour)
 	wbgStatsLastWeek := getWallabagStatsSubset(wbgStats, -7*24*time.Hour)
 	wbgStatsLastMonth := getWallabagStatsSubset(wbgStats, -30*24*time.Hour)
@@ -85,19 +80,25 @@ func generateOutput(wbgStats *WallabagStats) {
 		log.Printf("generateOutput: data sets in wbgStats=%v and wbgStatsLastYear=%v", len(wbgStats.Times), len(wbgStatsLastYear.Times))
 	}
 
+	// generate only if at least two data rows are available
 	if len(wbgStats.Times) > 1 {
 		generateChartPNG(wbgStats, *chartPNGPrefix+"overall"+pngFileSuffix)
 	}
-	if len(wbgStatsLastDay.Times) > 1 {
+	if len(wbgStatsLastDay.Times) > 1 && len(wbgStatsLastDay.Times) < len(wbgStats.Times) {
 		generateChartPNG(&wbgStatsLastDay, *chartPNGPrefix+"day"+pngFileSuffix)
 	}
-	if len(wbgStatsLastWeek.Times) > 1 {
+	if len(wbgStatsLastWeek.Times) > 1 && len(wbgStatsLastWeek.Times) < len(wbgStats.Times) {
 		generateChartPNG(&wbgStatsLastWeek, *chartPNGPrefix+"week"+pngFileSuffix)
 	}
-	if len(wbgStatsLastMonth.Times) > 1 {
+	if len(wbgStatsLastMonth.Times) > 1 && len(wbgStatsLastMonth.Times) < len(wbgStats.Times) {
 		generateChartPNG(&wbgStatsLastMonth, *chartPNGPrefix+"month"+pngFileSuffix)
 	}
-	if len(wbgStatsLastYear.Times) > 1 {
+	if len(wbgStatsLastYear.Times) > 1 && len(wbgStatsLastYear.Times) < len(wbgStats.Times) {
 		generateChartPNG(&wbgStatsLastYear, *chartPNGPrefix+"year"+pngFileSuffix)
 	}
+}
+
+func generateOutput(wbgStats *WallabagStats) {
+	generateCharts(wbgStats)
+	generateHTML(wbgStats)
 }
