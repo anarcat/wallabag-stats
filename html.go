@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"os"
 	"time"
 )
+
+const tmplDirectory = "tmpl"
 
 type dataRow struct {
 	No      int
@@ -15,45 +18,52 @@ type dataRow struct {
 	Starred float64
 }
 
-func writeDataTableHTML(wbgStats *WallabagStats) {
-	fo, err := os.Create(outputDirectory + "/data-table.html")
+type templateData struct {
+	TableData []dataRow
+	GenTime   time.Time
+}
+
+func writeTemplateToHTML(wbgStats *WallabagStats, templateName string) {
+	if *debug {
+		log.Printf("writeTemplateToHTML templateName=%v", templateName)
+	}
+	f, err := os.Create(outputDirectory + "/" + templateName + ".html")
 	if err != nil {
-		log.Println(err)
+		log.Println("writeTemplateToHTML", err)
 	}
 	defer func() {
-		if err := fo.Close(); err != nil {
-			log.Println(err)
+		if err := f.Close(); err != nil {
+			log.Println("writeTemplateToHTML", err)
 		}
 	}()
 
-	tableData := make([]dataRow, len(wbgStats.Times), len(wbgStats.Times))
+	var td templateData
+	td.TableData = make([]dataRow, len(wbgStats.Times), len(wbgStats.Times))
 	var d dataRow
 	for i := 0; i < len(wbgStats.Times); i++ {
 		d = dataRow{i + 1, wbgStats.Times[i], wbgStats.Total[i], wbgStats.Unread[i], wbgStats.Starred[i]}
-		tableData[i] = d
+		td.TableData[i] = d
 	}
-	const tableTpl = `<table>
-		<th>
-			<td>No.</td>
-			<td>Date</td>
-			<td>Total</td>
-			<td>Unread</td>
-			<td>Starred</td>
-		</th>
-		{{range .}}<tr><td>{{ .No }}</td><td>{{ .Times }}</td><td>{{ .Total }}</td><td>{{ .Unread }}</td><td>{{ .Starred }}</td></tr>{{else}}<div><strong>no data</strong></div>{{end}}
-	</table>`
-	htmlTable, err := template.New("data-table").Parse(tableTpl)
+
+	td.GenTime = time.Now()
+
+	htmlTable, err := template.ParseFiles(tmplDirectory+"/"+templateName+".tmpl", tmplDirectory+"/header.tmpl", tmplDirectory+"/footer.tmpl")
 	if err != nil {
-		log.Println("writeDataTableHTML error", err)
+		log.Println("writeTemplateToHTML", err)
 	}
-	htmlTable.Execute(fo, tableData)
+	htmlTable.Execute(f, td)
 }
 
 func generateHTML(wbgStats *WallabagStats) {
 	if *debug {
 		log.Println("generateHTML start")
 	}
-	writeDataTableHTML(wbgStats)
+	err := CopyDir("tmpl/static", outputDirectory)
+	if err != nil {
+		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
+	}
+	writeTemplateToHTML(wbgStats, "data-table")
+	writeTemplateToHTML(wbgStats, "index")
 
 	if *debug {
 		log.Println("generateHTML end")
