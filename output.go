@@ -87,24 +87,44 @@ func generateCharts(wbgStats *WallabagStats) (isDayGenerated, isWeekGenerated, i
 
 	// generate only if at least two data rows are available
 	if len(wbgStats.Times) > 1 {
-		generateChartPNG(wbgStats, chartOverallPath)
-		isOverallGenerated = true
+		err := generateChartPNG(wbgStats, chartOverallPath)
+		if err != nil {
+			isOverallGenerated = true
+		} else {
+			isOverallGenerated = true
+		}
 	}
 	if len(wbgStatsLastDay.Times) > 1 && len(wbgStatsLastDay.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastDay, chartDayPath)
-		isDayGenerated = true
+		err := generateChartPNG(&wbgStatsLastDay, chartDayPath)
+		if err != nil {
+			isDayGenerated = false
+		} else {
+			isDayGenerated = true
+		}
 	}
 	if len(wbgStatsLastWeek.Times) > 1 && len(wbgStatsLastWeek.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastWeek, chartWeekPath)
-		isWeekGenerated = true
+		err := generateChartPNG(&wbgStatsLastWeek, chartWeekPath)
+		if err != nil {
+			isWeekGenerated = false
+		} else {
+			isWeekGenerated = true
+		}
 	}
 	if len(wbgStatsLastMonth.Times) > 1 && len(wbgStatsLastMonth.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastMonth, chartMonthPath)
-		isMonthGenerated = true
+		err := generateChartPNG(&wbgStatsLastMonth, chartMonthPath)
+		if err != nil {
+			isMonthGenerated = false
+		} else {
+			isMonthGenerated = true
+		}
 	}
 	if len(wbgStatsLastYear.Times) > 1 && len(wbgStatsLastYear.Times) < len(wbgStats.Times) {
-		generateChartPNG(&wbgStatsLastYear, chartYearPath)
-		isYearGenerated = true
+		err := generateChartPNG(&wbgStatsLastYear, chartYearPath)
+		if err != nil {
+			isYearGenerated = false
+		} else {
+			isYearGenerated = true
+		}
 	}
 	return isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated
 }

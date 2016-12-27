@@ -9,10 +9,14 @@ import (
 	"github.com/wcharczuk/go-chart" //exposes "chart"
 )
 
-func generateChartPNG(wbgStats *WallabagStats, pictureName string) {
+func generateChartPNG(wbgStats *WallabagStats, pictureName string) error {
 	if *debug {
 		log.Printf("generateChartPNG: start generating chart in file pictureName=%v", pictureName)
 	}
+	if *debugDebug {
+		log.Printf("generateChartPNG: wbgStats: \n%v", wbgStats)
+	}
+
 	graph := chart.Chart{
 		XAxis: chart.XAxis{
 			Name:           "Time",
@@ -81,6 +85,7 @@ func generateChartPNG(wbgStats *WallabagStats, pictureName string) {
 			log.Println("generateChartPNG: error while rendering graph")
 		}
 		fmt.Println(err)
+		return err
 	}
 	err = ioutil.WriteFile(pictureName, buffer.Bytes(), 0644)
 	if err != nil {
@@ -88,5 +93,7 @@ func generateChartPNG(wbgStats *WallabagStats, pictureName string) {
 			log.Println("generateChartPNG: error while writing png")
 		}
 		fmt.Println(err)
+		return err
 	}
+	return nil
 }
