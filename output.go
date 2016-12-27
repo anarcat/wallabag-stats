@@ -134,6 +134,6 @@ func generateOutput(wbgStats *WallabagStats) {
 	if err != nil {
 		fmt.Println("error while copying contents from html/ dir to output/ dir. Error:", err)
 	}
-	isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated := generateCharts(wbgStats)
-	generateHTML(wbgStats, isDayGenerated, isWeekGenerated, isMonthGenerated, isYearGenerated, isOverallGenerated)
+	isDayGen, isWeekGen, isMonthGen, isYearGen, isOverallGen := generateCharts(wbgStats)
+	generateHTML(wbgStats, isDayGen, isWeekGen, isMonthGen, isYearGen, isOverallGen)
 }
