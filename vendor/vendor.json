@@ -9,52 +9,58 @@
 			"revisionTime": "2016-11-21T18:21:14Z"
 		},
 		{
+			"checksumSHA1": "SbgTGx3lnuqo29iiV2jdbnmVP7E=",
+			"path": "github.com/blendlabs/go-exception",
+			"revision": "3016f62c905ec9aab528104ef58ac4f5cd395a22",
+			"revisionTime": "2016-12-13T02:24:32Z"
+		},
+		{
 			"checksumSHA1": "aJ/kX/eCUlrCJBZ26Hwh/RXzAIw=",
 			"path": "github.com/golang/freetype/raster",
-			"revision": "38b4c392adc5eed94207994c4848fff99f4ac234",
-			"revisionTime": "2016-06-26T06:51:47Z"
+			"revision": "d9be45aaf7452cc30c0ceb1b1bf7efe1d17b7c87",
+			"revisionTime": "2016-12-08T06:47:10Z"
 		},
 		{
-			"checksumSHA1": "OFDbVPtW4VoZtkjPUVzpOOWe22I=",
+			"checksumSHA1": "M5K0e+YbpnI/3x9iNF/VOgOFnes=",
 			"path": "github.com/golang/freetype/truetype",
-			"revision": "38b4c392adc5eed94207994c4848fff99f4ac234",
-			"revisionTime": "2016-06-26T06:51:47Z"
+			"revision": "d9be45aaf7452cc30c0ceb1b1bf7efe1d17b7c87",
+			"revisionTime": "2016-12-08T06:47:10Z"
 		},
 		{
-			"checksumSHA1": "gq15JIJ5Kg8FqrBPONDJEFR9LAQ=",
+			"checksumSHA1": "LEB43juyER7qtfR0sMEUnVedHCQ=",
 			"path": "github.com/wcharczuk/go-chart",
-			"revision": "78e6288748e0076269c3e65a479b6ba72be61f1d",
-			"revisionTime": "2016-08-27T21:24:15Z"
+			"revision": "21986dbce7623b27c78a8f67c40470f797df0081",
+			"revisionTime": "2016-12-16T02:07:07Z"
 		},
 		{
 			"checksumSHA1": "KvhMRi/cqJzoCWTYPWt8iOe6y6c=",
 			"path": "github.com/wcharczuk/go-chart/drawing",
-			"revision": "78e6288748e0076269c3e65a479b6ba72be61f1d",
-			"revisionTime": "2016-08-27T21:24:15Z"
+			"revision": "21986dbce7623b27c78a8f67c40470f797df0081",
+			"revisionTime": "2016-12-16T02:07:07Z"
 		},
 		{
 			"checksumSHA1": "7E3Y1HU/UbsQF/dxMRdjFmx9QDQ=",
 			"path": "golang.org/x/image/draw",
-			"revision": "14bbbc8017cfd5c0ef634ab2d6e90b93bc255600",
-			"revisionTime": "2016-09-25T03:27:14Z"
+			"revision": "3ba119400e6fd98bf5100d1c17303c377b6521e9",
+			"revisionTime": "2016-12-21T11:38:45Z"
 		},
 		{
-			"checksumSHA1": "ZG6tBwXNShvXeDlqXHQ+5z8JxZw=",
+			"checksumSHA1": "o22rCJxvgdDnonL7uCGn2uXEPb8=",
 			"path": "golang.org/x/image/font",
-			"revision": "14bbbc8017cfd5c0ef634ab2d6e90b93bc255600",
-			"revisionTime": "2016-09-25T03:27:14Z"
+			"revision": "3ba119400e6fd98bf5100d1c17303c377b6521e9",
+			"revisionTime": "2016-12-21T11:38:45Z"
 		},
 		{
 			"checksumSHA1": "o7VkCGBiKM5HXzVzrIci1YDlpvc=",
 			"path": "golang.org/x/image/math/f64",
-			"revision": "14bbbc8017cfd5c0ef634ab2d6e90b93bc255600",
-			"revisionTime": "2016-09-25T03:27:14Z"
+			"revision": "3ba119400e6fd98bf5100d1c17303c377b6521e9",
+			"revisionTime": "2016-12-21T11:38:45Z"
 		},
 		{
 			"checksumSHA1": "m1TqtllJUaOuHc3MT1877jGtNT4=",
 			"path": "golang.org/x/image/math/fixed",
-			"revision": "14bbbc8017cfd5c0ef634ab2d6e90b93bc255600",
-			"revisionTime": "2016-09-25T03:27:14Z"
+			"revision": "3ba119400e6fd98bf5100d1c17303c377b6521e9",
+			"revisionTime": "2016-12-21T11:38:45Z"
 		}
 	],
 	"rootPath": "github.com/Strubbl/wallabag-stats"
